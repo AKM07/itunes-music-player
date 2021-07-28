@@ -1,23 +1,24 @@
 import '../LoadApiStatus.dart';
 
 class BaseResponse<T> {
-  String status;
-  String message;
-  String error;
-  List<T> data;
-  LoadApiStatus loadStatus;
+  int? resultCount;
+  List<T>? results;
+  String? error;
+  LoadApiStatus? loadStatus;
 
-  BaseResponse({this.status, this.message, this.data, this.error});
+  BaseResponse({this.resultCount, this.results, this.error});
 
-  BaseResponse.loading(this.message) : loadStatus = LoadApiStatus.LOADING;
-  BaseResponse.completed(this.data) : loadStatus = LoadApiStatus.COMPLETED;
-  BaseResponse.error(this.message) : loadStatus = LoadApiStatus.ERROR;
+  BaseResponse.loading() : loadStatus = LoadApiStatus.LOADING;
+
+  BaseResponse.completed(this.results) : loadStatus = LoadApiStatus.COMPLETED;
+
+  BaseResponse.error() : loadStatus = LoadApiStatus.ERROR;
 
   factory BaseResponse.fromJson(
       Map<String, dynamic> jsonData, Function fromJson) {
-    final items = jsonData['data'];
+    final items = jsonData['results'];
 
-    List<T> output = List();
+    List<T> output = [];
 
     if (items is Iterable) {
       for (Map<String, dynamic> json in items) {
@@ -28,15 +29,13 @@ class BaseResponse<T> {
     }
 
     return BaseResponse<T>(
-      status: jsonData["status"],
-      message: jsonData["message"],
-      data: output,
+      resultCount: jsonData["resultCount"],
+      results: output,
     );
   }
 
   BaseResponse.withError(String errorValue)
-      : status = "",
-        message = "",
-        data = List(),
+      : resultCount = 0,
+        results = [],
         error = errorValue;
 }

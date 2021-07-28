@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_skeleton/model/sqliteModel.dart';
-import 'package:mobile_skeleton/pages/LoginPage.dart';
+import 'package:mobile_skeleton/pages/MusicPlayerPage.dart';
 import 'package:mobile_skeleton/utils/injector.dart';
 
 import 'constants/Constants.dart';
@@ -9,12 +8,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupLocator();
   await baseDio();
-  final bool isInitialized = await AgrotechDBModel().initializeDB();
-  if (isInitialized) {
-    runApp(MyApp());
-  } else {
-    debugPrint("fail to init db");
-  }
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -22,11 +16,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: Constants.appName,
-      home: LoginPage(),
+      home: MusicPlayerPage(),
       initialRoute: '/',
       routes: {
-        '/login': (context) => LoginPage(),
-        // '/home': (context) => HomePage(),
+        '/player': (context) => MusicPlayerPage(),
       },
       theme: ThemeData(
         appBarTheme:
@@ -35,6 +28,7 @@ class MyApp extends StatelessWidget {
         primaryColorDark: Color(Constants.appMainColor),
         accentColor: Color(0xFFe0e0e0),
         backgroundColor: Constants.appBackgroundColor,
+        scaffoldBackgroundColor: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       debugShowCheckedModeBanner: false,
