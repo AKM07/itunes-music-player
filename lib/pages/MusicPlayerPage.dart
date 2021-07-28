@@ -18,7 +18,7 @@ class _MusicPlayerPageState extends State<MusicPlayerPage> {
   TextEditingController _searchController = new TextEditingController();
   final AudioPlayer _player = AudioPlayer();
   bool _showMediaController = false;
-  double _lastTrackId = 0;
+   double _lastTrackId = 0;
 
   @override
   void initState() {
@@ -217,63 +217,83 @@ class _MusicPlayerPageState extends State<MusicPlayerPage> {
       width: SizeUtil.screenWidth,
       height: defaultSize * 5,
       padding: EdgeInsets.symmetric(horizontal: 25),
-      child: Center(
-        child: StreamBuilder<PlayerState>(
-          stream: _player.playerStateStream,
-          builder: (context, snapshot) {
-            final playerState = snapshot.data;
-            final processingState = playerState?.processingState;
-            final playing = playerState?.playing;
-            if (processingState == ProcessingState.loading ||
-                processingState == ProcessingState.buffering) {
-              return Container(
-                margin: EdgeInsets.all(8.0),
-                width: 35,
-                height: 35,
-                child: CommonLoadingWidget(),
-              );
-            } else if (playing != true) {
-              return IconButton(
-                icon: Icon(
-                  Icons.play_arrow_rounded,
-                  color: Colors.white,
-                  size: 35,
-                ),
-                onPressed: () {
-                  _player.play();
-                  setState(() {
-                    _showMediaController = true;
-                  });
-                },
-              );
-            } else if (processingState != ProcessingState.completed) {
-              return IconButton(
-                icon: Icon(
-                  Icons.pause_rounded,
-                  color: Colors.white,
-                  size: 35,
-                ),
-                onPressed: () {
-                  _player.pause();
-                },
-              );
-            } else {
-              return IconButton(
-                icon: Icon(
-                  Icons.play_arrow_rounded,
-                  color: Colors.white,
-                  size: 35,
-                ),
-                onPressed: () {
-                  _player.seek(Duration.zero);
-                  setState(() {
-                    _showMediaController = true;
-                  });
-                },
-              );
-            }
-          },
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          IconButton(
+            icon: Icon(
+              Icons.skip_previous_rounded,
+              color: Colors.white,
+              size: 35,
+            ),
+            onPressed: () {},
+          ),
+          StreamBuilder<PlayerState>(
+            stream: _player.playerStateStream,
+            builder: (context, snapshot) {
+              final playerState = snapshot.data;
+              final processingState = playerState?.processingState;
+              final playing = playerState?.playing;
+              if (processingState == ProcessingState.loading ||
+                  processingState == ProcessingState.buffering) {
+                return Container(
+                  margin: EdgeInsets.all(8.0),
+                  width: 35,
+                  height: 35,
+                  child: CommonLoadingWidget(),
+                );
+              } else if (playing != true) {
+                return IconButton(
+                  icon: Icon(
+                    Icons.play_arrow_rounded,
+                    color: Colors.white,
+                    size: 35,
+                  ),
+                  onPressed: () {
+                    _player.play();
+                    setState(() {
+                      _showMediaController = true;
+                    });
+                  },
+                );
+              } else if (processingState != ProcessingState.completed) {
+                return IconButton(
+                  icon: Icon(
+                    Icons.pause_rounded,
+                    color: Colors.white,
+                    size: 35,
+                  ),
+                  onPressed: () {
+                    _player.pause();
+                  },
+                );
+              } else {
+                return IconButton(
+                  icon: Icon(
+                    Icons.play_arrow_rounded,
+                    color: Colors.white,
+                    size: 35,
+                  ),
+                  onPressed: () {
+                    _player.seek(Duration.zero);
+                    setState(() {
+                      _showMediaController = true;
+                    });
+                  },
+                );
+              }
+            },
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.skip_next_rounded,
+              color: Colors.white,
+              size: 35,
+            ),
+            onPressed: () {},
+          )
+        ],
       ),
     );
   }
