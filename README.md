@@ -1,16 +1,24 @@
-# mobile_skeleton
+# Flutter Itunes Music Preview Player
 
-A starting point for develop flutter application
+An app to play preview music from itunes
 
-## Getting Started
+## Supported Devices
 
-This project is a starting point for a Flutter application.
+- Android SDK 21 or above
+- IOS 9 or above
 
-A few resources to get you started if this is your first Flutter project:
+## Supported Features
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- Search artist
+- Play and Pause Music
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Requirements to build the app
+
+- Flutter version 2.0.5 stable channel
+- Dart version 2.12.3
+
+## Instruction
+
+- Clone the project from repository
+- Run "flutter pub get" on terminal
+- After getting depedencies process done, Run "flutter run lib/main.dart" on terminal
